@@ -42,4 +42,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * A user has many posts
+     * 
+     * @return A collection of posts.
+     */
+    public function posts() {
+        /* A method that is part of the Eloquent ORM. It is saying that a user has many posts. */
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * > The `likes` function returns all the likes that belong to the post
+     * 
+     * @return The likes relationship is being returned.
+     */
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
 }
