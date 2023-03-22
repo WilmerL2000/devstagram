@@ -19,8 +19,8 @@ class RegisterController extends Controller
 
         $this->validate($request, [
             'name'=> 'required|max:20',
-            'username'=> 'required|unique:users|min:3|max:20',
-            'email'=> 'required|unique:users|email|max:60',
+            'username'=> ['required','unique:users','min:3','max:20'],
+            'email'=> ['required','unique:users','email','max:60'],
             'password'=> 'required|confirmed|min:6'
         ]);
 
@@ -38,6 +38,6 @@ class RegisterController extends Controller
         
         auth()->attempt($request->only('email', 'password'));
 
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.index',$request->username );
     }
 }

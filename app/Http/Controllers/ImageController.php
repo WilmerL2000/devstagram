@@ -8,6 +8,14 @@ use Intervention\Image\Facades\Image;
 
 class ImageController extends Controller
 {
+    /**
+     * We're taking the image from the request, creating a unique name for it, creating an image
+     * object, resizing it, creating a path to it, and saving it to the path
+     * 
+     * @param Request request The request object.
+     * 
+     * @return The image name.
+     */
     public function store(Request $request) {
         $image = $request->file('file');
 

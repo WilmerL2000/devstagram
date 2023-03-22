@@ -8,7 +8,7 @@
     <div class="container mx-auto md:flex px-3 md:px-0">
         <div class="md:w-1/2">
             <img src="{{ asset('uploads') . '/' . $post->image }}" alt="Post image {{ $post->title }}" class="rounded-lg" />
-            <div class="p-3 flex gap-3 items-center">
+            <div class="p-2 flex gap-3 items-center">
                 @auth
                     @if ($post->checkLike(auth()->user()))
                         <form action="{{ route('posts.likes.destroy', $post) }}" method="post">

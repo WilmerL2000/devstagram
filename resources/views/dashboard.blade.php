@@ -8,7 +8,8 @@
     <div class="flex justify-center">
         <div class="w-full md:w-8/12 lg:w-6/12 flex flex-col items-center md:flex-row">
             <div class="w-8/12 lg:w-6/12 px-5">
-                <img src="{{ asset('img/usuario.svg') }}" alt="Imagen usuario" />
+                <img src="{{ $user->image ? asset('profiles') . '/' . $user->image : asset('img/usuario.svg') }}"
+                    alt="Imagen usuario" class="rounded-full" />
             </div>
             <div class="md:w-8/12 lg:w-6/12 px-5 flex flex-col items-center md:justify-center md:items-start py-10 md:py-10">
 
@@ -28,34 +29,49 @@
                     @endauth
                 </div>
 
-                <p class="text-gray-800 text-sm mb-3 font-bold mt-5">0 <span class="font-normal">Seguidores</span></p>
-                <p class="text-gray-800 text-sm mb-3 font-bold">0 <span class="font-normal">Siguiendo</span></p>
-                <p class="text-gray-800 text-sm mb-3 font-bold">0 <span class="font-normal">Posts</span></p>
+                <p class="text-gray-800 text-base mb-3 font-bold mt-5">{{ $user->followers->count() }}
+                    <span class="font-normal">
+                        @choice('Seguidor|Seguidores', $user->followers->count())
+                    </span>
+                </p>
+                <p class="text-gray-800 text-base mb-3 font-bold">{{ $user->followings->count() }}
+                    <span class="font-normal">
+                        Siguiendo
+                    </span>
+                </p>
+                <p class="text-gray-800 text-base mb-3 font-bold">{{ $user->posts->count() }}
+                    <span class="font-normal">
+                        Posts
+                    </span>
+                </p>
+                @auth
+                    @if ($user->id !== auth()->user()->id)
+                        @if (!$user->following(auth()->user()))
+                            <form action="{{ route('users.follow', $user) }}" method="post">
+                                @csrf
+                                <input type="submit"
+                                    class="bg-blue-600 hover:bg-blue-700 text-white uppercase rounded-lg px-3 py-1 text-sm cursor-pointer"
+                                    value="Seguir" />
+                            </form>
+                        @else
+                            <form action="{{ route('users.unfollow', $user) }}" method="post">
+                                @method('delete')
+                                @csrf
+                                <input type="submit"
+                                    class="bg-red-600 hover:bg-red-700 text-white uppercase rounded-lg px-3 py-1 text-sm cursor-pointer"
+                                    value="No seguir" />
+                            </form>
+                        @endif
+                    @endif
+
+                @endauth
+
             </div>
         </div>
     </div>
 
     <section class="container mx-auto mt-10">
         <h2 class="text-4xl text-center font-black my-10">Publicaciones</h2>
-        @if ($posts->count() > 0)
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                @foreach ($posts as $post)
-                    <div>
-                        <a href="{{ route('posts.show', ['post' => $post, 'user' => $user]) }}">
-                            <img src="{{ asset('uploads') . '/' . $post->image }}" alt="Post image {{ $post->title }}"
-                                class="transition ease-in hover:scale-75 delay-100 duration-220 rounded-md" />
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="my-10">
-                {{ $posts->links('pagination::tailwind') }}
-            </div>
-        @else
-            <p class="text-gray-600 uppercase text-sm text-center font-bold">No hay publicaciones</p>
-        @endif
-
-
+        <x-list-post :posts="$posts" />
     </section>
 @endsection

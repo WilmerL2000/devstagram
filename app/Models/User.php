@@ -59,6 +59,41 @@ class User extends Authenticatable
      * @return The likes relationship is being returned.
      */
     public function likes(){
+        /* Saying that a user can have many likes. */
         return $this->hasMany(Like::class);
+    }
+
+   /**
+    * A user can have many followers
+    * Stores the followers of a user
+
+    * @return A collection of users.
+    */
+    public function followers(){
+        /* Saying that a user can have many followers. */
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    /**
+     * > The followings() function returns a collection of all the users that the current user is
+     * following
+     * 
+     * @return A collection of users that the current user is following.
+     */
+    public function followings(){
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+
+    /**
+     * If the user is following the given user, return true
+     * Check if a user already follows another
+     * 
+     * @param User user The user we are following.
+     * 
+     * @return A boolean value.
+     */
+    public function following(User $user){
+        /* Checking if the user is following the given user. */
+        return $this->followers->contains($user->id);
     }
 }
