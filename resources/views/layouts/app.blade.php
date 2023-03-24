@@ -12,13 +12,29 @@
 </head>
 
 <body class="bg-gray-100">
-    <header class="p-5 border-b bg-white shadow">
+    <header class="p-5 border-b bg-white shadow sticky top-0 z-20">
         <div class="container mx-auto flex justify-between items-center">
             <a href="{{ route('home') }}" class="text-3xl font-black">DevStagram</a>
             @auth
-                <nav class="flex gap-2 items-center">
+                <nav class="flex gap-2 items-center ">
+                    <a href="{{ route('search.index') }}"
+                        class="flex items-center gap-2 bg-white border p-2 text-gray-600 rounded-full 
+                        text-sm uppercase font-bold cursor-pointer hover:ring-2 hover:ring-gray-300 dark:hover:ring-gray-600
+                        focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600
+                        ">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                        <p class="md:block hidden">
+                            Buscar
+                        </p>
+                    </a>
                     <a class="flex items-center gap-2 bg-white border p-2 text-gray-600 
-                        rounded text-sm uppercase font-bold cursor-pointer"
+                        rounded text-sm uppercase font-bold cursor-pointer hover:ring-2 hover:ring-gray-300 dark:hover:ring-gray-600
+                        focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
                         href="{{ route('posts.create') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -28,17 +44,30 @@
                                 d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
                         </svg>
 
-                        Crear
+                        <p class="md:block hidden">Crear</p>
                     </a>
 
-                    <a class="font-bold text-gray-600 text-sm" href="{{ route('posts.index', auth()->user()->username) }}">
-                        Hola: <span class="font-normal">{{ auth()->user()->username }}</span>
+                    <a class="font-bold text-gray-600 text-sm flex items-center gap-3 "
+                        href="{{ route('posts.index', auth()->user()->username) }}">
+                        <img src="{{ asset('profiles') . '/' . auth()->user()->image }}"
+                            alt="Post image {{ auth()->user()->title }}" class="rounded-full h-12 w-12" />
+                        <span class="font-serif uppercase md:block hidden hover:dar">{{ auth()->user()->username }}</span>
                     </a>
 
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="font-bold uppercase text-gray-600 text-sm" href={{ route('logout') }}>
-                            Cerrar sesion
+                        <button type="submit" class="font-bold uppercase text-red-600 text-sm flex"
+                            href={{ route('logout') }}>
+                            <div class="md:hidden block ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                                </svg>
+                            </div>
+                            <p class="md:block hidden">
+                                Cerrar sesion
+                            </p>
                         </button>
                     </form>
                 </nav>

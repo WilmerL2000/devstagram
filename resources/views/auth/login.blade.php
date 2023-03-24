@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="md:flex md:justify-center md:gap-10 md:items-center">
-        <div class="md:w-6/12 p-5">
+        <div class="md:w-6/12 p-5 md:block hidden">
             <img src={{ asset('img/login.jpg') }} alt="Login usuarios" />
         </div>
         <div class="md:w-4/12 bg-white p-6 rounded-lg shadow-xl">

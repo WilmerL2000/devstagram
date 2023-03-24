@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FollowerController;
@@ -31,6 +32,8 @@ Route::post('/{user:username}/posts/{post}', [CommentController::class, 'store']
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
 Route::post('/images', [ImageController::class, 'store'])->name('images.store');
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::post('/search', [SearchController::class, 'show'])->name('search.show');
 
 //Photo likes
 Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('posts.likes.store');

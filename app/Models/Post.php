@@ -27,7 +27,7 @@ class Post extends Model
      * @return The name and username of the user who created the post.
      */
     public function user(){
-        return $this->belongsTo(User::class)->select(['name', 'username']);
+        return $this->belongsTo(User::class)->select(['name', 'username', 'image']);
     }
 
    /**

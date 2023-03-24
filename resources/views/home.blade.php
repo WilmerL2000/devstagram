@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    <x-list-post :posts="$posts" />
+    <x-list-post-card :posts="$posts" />
 @endsection
