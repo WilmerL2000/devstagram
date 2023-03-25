@@ -105,22 +105,29 @@
                         @foreach ($post->comments as $comment)
                             <div class="p-5 border-gray-300 border-b ">
                                 <div class="flex items-center gap-3">
-                                    <a href="{{ route('posts.index', $comment->user) }}"
-                                        class="font-bold hover:text-slate-500">
-                                        {{ $comment->user->username }}
+                                    <a href="{{ route('posts.index', $comment->user) }}">
+                                        <img src="{{ $comment->user->image ? asset('profiles') . '/' . $comment->user->image : asset('img/usuario.svg') }}"
+                                            alt="User image {{ $comment->user->image }}"
+                                            class="rounded-full max-h-9 w-9" />
                                     </a>
-                                    <p class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</p>
+                                    <div>
+                                        <div class="flex items-center gap-3">
+                                            <a href="{{ route('posts.index', $comment->user) }}"
+                                                class="font-bold hover:text-slate-500">
+                                                {{ $comment->user->username }}
+                                            </a>
+                                            <p class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                        <p class="font-serif">{{ $comment->comment }}</p>
+                                    </div>
                                 </div>
-
-                                <p class="font-serif">{{ $comment->comment }}</p>
-
                             </div>
                         @endforeach
                     @else
                         <p class="p-10 text-center">No hay comentarios aun</p>
                     @endif
                 </div>
-
             </div>
         </div>
     </div>

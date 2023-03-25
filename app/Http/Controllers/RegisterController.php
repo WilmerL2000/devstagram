@@ -6,11 +6,16 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
     public function index() {
-        return view('auth.register');
+        if(Auth::check()){
+            return redirect()->route('posts.index', auth()->user()->username);
+        }else{
+            return view('auth.register');
+        }
     }
 
     public function store(Request $request) {

@@ -34,24 +34,38 @@
             </form>
         </div>
         <div class="md:w-6/12 mt-10 md:mt-0 px-2 ">
-            <div class="shadow bg-white p-5 mb-5 rounded-md md:mt-10">
-                <div class="flex flex-col">
-                    @if (!empty($users))
-                        @foreach ($users as $user)
-                            <a href="{{ route('posts.index', $user->username) }}">
-                                <img src="{{ $user->image ? asset('profiles') . '/' . $user->image : asset('img/usuario.svg') }}"
-                                    alt="User image {{ $user->username }}"
-                                    class="rounded-full max-h-11 w-12 transition ease-in hover:scale-125 delay-130 duration-250" />
-                                {{ $user->username }}
-                            </a>
-                        @endforeach
+            <div class="shadow bg-white p-5 rounded-md md:mt-10">
+                @if (!empty($users))
+                    @if ($users->count())
+                        <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center"">
+                            @foreach ($users as $user)
+                                <a href="{{ route('posts.index', $user->username) }}">
+                                    <div class="flex flex-col items-center bg-gray-500 rounded-lg p-5">
+                                        <img src="{{ $user->image ? asset('profiles') . '/' . $user->image : asset('img/usuario.svg') }}"
+                                            alt="User image {{ $user->username }}"
+                                            class="rounded-full max-h-16 w-16 transition ease-in hover:scale-110 delay-130 duration-250" />
+                                        <p class="text-white">
+                                            {{ $user->name }}
+                                        </p>
+                                        <p class="text-gray-300">
+                                            {{ $user->username }}
+                                        </p>
+
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+
+                        <div class="my-10">
+                            {{ $users->links('pagination::tailwind') }}
+                        </div>
                     @else
-                        <p class=" text-center">No hay resultados</p>
+                        <p class=" text-center text-gray-500 font-serif">No hay resultados</p>
                     @endif
-                </div>
+                @else
+                    <p class=" text-center text-gray-500 font-serif">Busca un usuario...</p>
+                @endif
             </div>
         </div>
-
-
     </div>
 @endsection
